@@ -1,15 +1,17 @@
-body, html {
-height: 100%;
-width: 100%;
-margin: 0;
-font-family: sans-serif;
+:root {
+  font-family: Arial, Helvetica, sans-serif;
 }
+
+html {
+  color: black;
+}
+
 body {
- background-color: GhostWhite;
+  margin: 0;
+  background-color: GhostWhite;
 }
 h1 {
-color: black;
-text-align: center;
+  text-align: center;
 }
 /* Style the tab */
 .tab {
@@ -27,7 +29,7 @@ text-align: center;
   outline: none;
   cursor: pointer;
   padding: 14px 16px;
-  transition: 0.5s;
+  transition: background-color 200ms;
   font-size: 30px;
   text-align: center;
   width: 25%;
