@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+<h1> school spirit</h1>
+<div class="tab" style="background-color: red;">
+	<button class="tablinks" onclick="openMenu(event, 'home')">home</button>
+	<button class="tablinks" onclick="openMenu(event, 'points')">points</button>
+	<button class="tablinks" onclick="openMenu(event, 'leaderboards')">leaderboards</button>
+	<button class="tablinks" onclick="openMenu(event, 'store')">store</button>
+</div>
+
+<!-- tab content -->
+<div id="home" class="tabcontent" style="background-color:silver;">
+
+	<h3>Home</h3>
+	<p>filler for home page</p>
+</div>
+<div id="points" class="tabcontent" style="background-color:silver;">
+	<h3>Points</h3>
+	<p>filler for points page</p>
+</div>
+<div id="leaderboards" class="tabcontent" style="background-color:silver;">
+	<h3>Leaderboards</h3>
+	<p>filler for leaderboards will have to import leaderboards from datatbase</p>
+</div>
+<div id="store" class="tabcontent" style="background-color:silver;">
+	<h3>Store</h3>
+	<p>filler for store</p>
+</div>
+<script>
+function openMenu(evt, cityName) {
+  // Declare all variables
+  var i, tabcontent, tablinks;
+
+  // Get all elements with class="tabcontent" and hide them
+  tabcontent = document.getElementsByClassName("tabcontent");
+  for (i = 0; i < tabcontent.length; i++) {
+    tabcontent[i].style.display = "none";
+  }
+
+  // Get all elements with class="tablinks" and remove the class "active"
+  tablinks = document.getElementsByClassName("tablinks");
+  for (i = 0; i < tablinks.length; i++) {
+    tablinks[i].className = tablinks[i].className.replace(" active", "");
+  }
+
+  // Show the current tab, and add an "active" class to the button that opened the tab
+  document.getElementById(cityName).style.display = "block";
+  evt.currentTarget.className += " active";
+}
+</script>
+</body>
+</html>
