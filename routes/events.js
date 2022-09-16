@@ -1,8 +1,10 @@
 const express = require('express');
 const router = express.Router();
+const client = require('../src/database')
 
-router.get('/', function(req, res) {
-    res.send('events')
+router.get('/', async function(req, res) {
+    const value = await client.get('tree');
+    res.send(value)
 })
 
 router.route('/:id')
