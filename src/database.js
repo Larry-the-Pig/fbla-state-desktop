@@ -5,6 +5,7 @@ const client = new Client();
 async function connect() {
     if (!client.isOpen()) {
         await client.open('redis://localhost:6379');
+        await studentRepository.createIndex();
     }
 }
 
@@ -16,7 +17,7 @@ const schema = new Schema(Student, {
     firstName: { type: 'string'},
     lastName: { type: 'string'},
     email: { type: 'string'},
-    points: { type: 'number'},
+    points: { type: 'number', sortable: true },
     gpa: { type: 'number'}
 })
 
@@ -56,4 +57,25 @@ async function deleteStudent(id) {
     await studentRepository.remove(id)
 }
 
-module.exports = { getStudent, createStudent, deleteStudent }
+async function searchStudent(query) {
+    await connect()
+
+    const results = await studentRepository.search()
+        .where('firstName')
+        .equals(query)
+        .or('lastName')
+        .equals(query)
+        .return.all();
+    //console.log(results)
+    return results//.json()
+}
+
+async function getLeaderboard() {
+    await connect();
+
+    const results = await studentRepository.search().sortDescending('points').return.all()
+
+    return results;
+}
+
+module.exports = { getStudent, createStudent, deleteStudent, searchStudent, getLeaderboard }

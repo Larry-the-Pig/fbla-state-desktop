@@ -4,9 +4,10 @@ const app = express();
 const bodyParser = require('body-parser');
 
 app.use(express.static("./public"))
+//app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.set('view engine', 'ejs')
+app.set('view engine', 'pug')
 
 app.get('/', function(req, res) {
     res.render('login', {test: req.ip})
