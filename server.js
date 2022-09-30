@@ -26,8 +26,6 @@ const eventRouter = require('./routes/events');
 
 app.use('/events', eventRouter);
 
-console.log(process.env.PORT)
-
 app.listen(process.env.PORT, () => {
-    console.log(`Example app listening on port ${process.env.PORT}`)
+    console.log(`http://localhost:${process.env.PORT}`)
   })

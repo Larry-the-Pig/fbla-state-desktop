@@ -2,3 +2,12 @@ input.delete {
     background-color: #bf616a;
     color: #2e3440;
 }
+
+.hidden {
+    display: none;
+}
+
+input.edit {
+    /*background-color: inherit;*/
+    padding: 0;
+}

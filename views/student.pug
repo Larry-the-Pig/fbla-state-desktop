@@ -10,19 +10,43 @@ html(lang="en")
         title Document
     body 
         h1 Student Entry
-        p 
-            b Name: 
-            =`${firstName} ${lastName}`
-            br
-        p
-            b Email: 
-            =`${email}`
-            br
-        p
-            b Points: 
-            =`${points}`
-            br
-        p 
-            b GPA: 
-            =`${gpa}`
-        input(type="submit", value="Delete", class="delete")
+        div
+            p 
+                b Name: 
+                =`${firstName} ${lastName}`
+                br
+            p
+                b Email: 
+                =`${email}`
+                br
+            p
+                b Points: 
+                =`${points}`
+                br
+            p 
+                b GPA: 
+                =`${gpa}`
+            input(type="button", value="Delete", class="delete")
+        
+        form(action="edit", method="post" class="hidden")
+            p 
+                b First Name: 
+                input(class="edit" type="text" name="firstName" value=`${firstName}`)
+                br
+            p 
+                b Last Name: 
+                input(class="edit" type="text" name="lastName" value=`${lastName}`)
+                br
+            p
+                b Email: 
+                input(class="edit" type="text" name="email" value=`${email}`)
+                br
+            p
+                b Points: 
+                input(class="edit" type="text" name="points" value=`${points}`)
+                br
+            p 
+                b GPA: 
+                input(class="edit" type="text" name="gpa" value=`${gpa}`)
+            input(type="submit", value="Submit", class="submit")
+        input(type="button", value="Edit", class="put" onclick="location.href+='/edit'")

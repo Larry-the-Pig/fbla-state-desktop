@@ -30,11 +30,25 @@ async function createStudent(data) {
     student.firstName = data.firstName;
     student.lastName = data.lastName;
     student.email = data.email;
-    student.points = parseInt(data.points);
-    student.gpa = parseInt(data.gpa);
+    student.points = data.points;
+    student.gpa = data.gpa;
     const id = await studentRepository.save(student);
 
     return id;
+}
+
+async function editStudent(id, data) {
+    await connect();
+
+    const student = await studentRepository.fetch(id);
+
+    student.firstName = data.firstName;
+    student.lastName = data.lastName;
+    student.email = data.email;
+    student.points = data.points;
+    student.gpa = data.gpa;
+    
+    return await studentRepository.save(student);
 }
 
 async function getStudent(id) {
@@ -49,6 +63,7 @@ async function getStudent(id) {
         points: student.points,
         gpa: student.gpa
     }
+    //return student;
 }
 
 async function deleteStudent(id) {
@@ -78,4 +93,11 @@ async function getLeaderboard() {
     return results;
 }
 
-module.exports = { getStudent, createStudent, deleteStudent, searchStudent, getLeaderboard }
+module.exports = { 
+    getStudent, 
+    createStudent, 
+    deleteStudent, 
+    searchStudent, 
+    getLeaderboard, 
+    editStudent 
+}

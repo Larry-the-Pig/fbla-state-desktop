@@ -21,6 +21,7 @@ h1 {
 }
 
 input {
+  font-family: Arial, Helvetica, sans-serif;
   font-size: 18px;
   color: #ECEFF4;
   background-color: #4C566A;
@@ -28,6 +29,7 @@ input {
 
   padding: 0.5rem;
   border-radius: 0.25rem;
+  outline: none;
 }
 
 button {
@@ -78,6 +80,11 @@ a.navbutton {
   background-color: #4C566A;
   text-decoration: none;
   
-  padding: 1rem;;
+  padding: 1rem;
+  /*overflow: hidden;*/
+}
+
+header {
   overflow: hidden;
+  width: 100%;
 }

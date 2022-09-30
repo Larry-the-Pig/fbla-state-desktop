@@ -9,5 +9,5 @@ html(lang="en")
     body 
         ol 
             each student in results
-                a(href=`/students/${student.entityId}`)
+                a(href=`/students/${student.entityId}/`)
                     li= `${student.entityFields.firstName._value} ${student.entityFields.lastName._value} - ${student.entityFields.points._value} Points`

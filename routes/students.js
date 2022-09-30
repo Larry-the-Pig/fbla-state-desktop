@@ -2,18 +2,13 @@ const express = require('express');
 const router = express.Router();
 const database = require('../src/database');
 
-//const client = require('../src/database')
-//app.use(bodyParser.json());
-
-
 router.get('/', async function(req, res) {
     if (req.query.q === undefined || req.query.q === '') {
+        //Empty Search Results
         res.render('search', { results: [] })
-        console.log('undefined')
     } else {
-        console.log(req.query.q)
+        //Search db for query
         const results = await database.searchStudent(req.query.q)
-        //console.log(results)
         res.render('search', { results: results })
     }
 })
@@ -25,33 +20,62 @@ router.get('/leaderboard', async function(req, res) {
 })
 
 router.post('/new', async function(req, res) {
-    console.log(res.body)
-    const id = await database.createStudent(req.body);
+    console.log(req.body)
+    const data = {
+        firstName: req.body.firstName ?? null,
+        lastName: req.body.lastName ?? null,
+        email: req.body.email ?? null,
+        gpa: parseInt(req.body.gpa) ?? null,
+        points: parseInt(req.body.points) ?? null,
+    }
+    const id = await database.createStudent(data);
 
-    //const id = await studentRepository.save(student)
-    res.redirect(id);
+    res.redirect(`${id}/`);
     console.log(`Created ID: ${id}`);
 })
 
-router.route('/:id')
+router.post('/:id/edit', async function(req, res) {
+    console.log(req.body);
+    const data = {
+        firstName: req.body.firstName ?? null,
+        lastName: req.body.lastName ?? null,
+        email: req.body.email ?? null,
+        gpa: parseInt(req.body.gpa) ?? null,
+        points: parseInt(req.body.points) ?? null,
+    }
+
+    await database.editStudent(req.params.id, data);
+    res.redirect(`/students/${req.params.id}/`)
+})
+
+router.route('/:id/')
     .get(async function(req, res) {
         const data = await database.getStudent(req.params.id);
-        //console.log(data)
+
         res.render('student', data)
     })
-    .put(function(req, res) {
-        res.send(req.params.id.toString())
+    .put(async function(req, res) {
+        console.log(req.body);
+        const data = {
+            firstName: req.body.firstName ?? null,
+            lastName: req.body.lastName ?? null,
+            email: req.body.email ?? null,
+            gpa: parseInt(req.body.gpa) ?? null,
+            points: parseInt(req.body.points) ?? null,
+        }
+
+        //await database.editStudent(req.params.id, data);
+        res.send('ok')
     })
-    .delete(function(req, res) {
-        console.log('deleted ' + req.params.id)
-        database.deleteStudent(req.params.id);
+    .delete(async function(req, res) {
+        console.log('Deleted: ' + req.params.id)
+        await database.deleteStudent(req.params.id);
         res.redirect('/')
     })
 
 router.param('id', function(req, res, next, id) {
-    //console.log(id);
+    //req.params.id
     next();
 })
-
 
 module.exports = router;
