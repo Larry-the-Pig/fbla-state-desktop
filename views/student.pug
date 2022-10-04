@@ -1,52 +1,52 @@
-doctype html
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        meta(http-equiv="X-UA-Compatible", content="IE=edge")
-        meta(name="viewport", content="width=device-width, initial-scale=1.0")
-        link(rel="stylesheet", href="/styles.css")
-        link(rel="stylesheet", href="/student.css")
-        script(src="/delete.js", defer="true") 
-        title Document
-    body 
-        h1 Student Entry
-        div
-            p 
-                b Name: 
-                =`${firstName} ${lastName}`
-                br
-            p
-                b Email: 
-                =`${email}`
-                br
-            p
-                b Points: 
-                =`${points}`
-                br
-            p 
-                b GPA: 
-                =`${gpa}`
-            input(type="button", value="Delete", class="delete")
-        
-        form(action="edit", method="post" class="hidden")
-            p 
-                b First Name: 
-                input(class="edit" type="text" name="firstName" value=`${firstName}`)
-                br
-            p 
-                b Last Name: 
-                input(class="edit" type="text" name="lastName" value=`${lastName}`)
-                br
-            p
-                b Email: 
-                input(class="edit" type="text" name="email" value=`${email}`)
-                br
-            p
-                b Points: 
-                input(class="edit" type="text" name="points" value=`${points}`)
-                br
-            p 
-                b GPA: 
-                input(class="edit" type="text" name="gpa" value=`${gpa}`)
-            input(type="submit", value="Submit", class="submit")
+extends layout.pug
+
+block css 
+    link(rel="stylesheet", href="/student.css")
+
+block js 
+    script(src="/delete.js", defer="true") 
+
+
+block content 
+    h1 Student Entry
+    div
+        p 
+            b First Name: 
+        p=`${firstName}`
+
+        p 
+            b Last Name: 
+        p=`${lastName}`
+
+        p
+            b Email: 
+        p=`${email}`
+
+        p
+            b Points: 
+        p=`${points}`
+
+        p 
+            b GPA: 
+        p=`${gpa}`
+        input(type="button", value="Delete", class="delete")
         input(type="button", value="Edit", class="put" onclick="location.href+='/edit'")
+    
+    form(action="edit", method="post" class="hidden")
+        p 
+            b First Name: 
+        input(class="edit" type="text" name="firstName" value=`${firstName}`)
+        p 
+            b Last Name: 
+        input(class="edit" type="text" name="lastName" value=`${lastName}`)
+        p
+            b Email: 
+        input(class="edit" type="text" name="email" value=`${email}`)
+        p
+            b Points: 
+        input(class="edit" type="text" name="points" value=`${points}`)
+        p 
+            b GPA: 
+        input(class="edit" type="text" name="gpa" value=`${gpa}`)
+        input(type="submit", value="Submit", class="submit")
+        input(type="button", value="Exit", class="put" onclick="location.href+='/edit'")

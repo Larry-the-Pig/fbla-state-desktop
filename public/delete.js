@@ -1,5 +1,5 @@
 const deleteButton = document.querySelector('input.delete');
-const editButton = document.querySelector('input.put');
+const editButton = document.querySelectorAll('input.put');
 const submitButton = document.querySelector('input.submit')
 
 deleteButton.onclick = async function(e) {
@@ -10,7 +10,11 @@ deleteButton.onclick = async function(e) {
     window.location.replace('/students')
 }
 
-editButton.onclick = function(e) {
+editButton.forEach(function(editButton) {
+    editButton.onclick = edit;
+})
+
+function edit(e) {
     document.querySelectorAll('div, form').forEach(function(div) {
         div.classList.toggle('hidden')
     })

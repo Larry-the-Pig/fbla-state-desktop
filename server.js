@@ -1,12 +1,16 @@
 const express = require('express');
-require('dotenv').config()
 const app = express();
+const cors = require('cors');
+const morgan = require('morgan');
 const bodyParser = require('body-parser');
 
+require('dotenv').config()
+
 app.use(express.static("./public"))
-//app.use(express.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
+app.use(morgan('tiny'));
+app.use(cors());
 app.set('view engine', 'pug')
 
 app.get('/', function(req, res) {

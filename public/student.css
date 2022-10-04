@@ -11,3 +11,15 @@ input.edit {
     /*background-color: inherit;*/
     padding: 0;
 }
+
+div, form {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 25%);
+    gap: 0.25rem;
+}
+
+input.submit {
+    background-color: #A3BE8C;
+    color: #2e3440;
+}

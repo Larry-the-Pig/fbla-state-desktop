@@ -19,13 +19,17 @@ router.get('/leaderboard', async function(req, res) {
     res.render('leaderboard', { results: results })
 })
 
+router.get('/submit', async function(req, res) {
+    res.render('submitStudent')
+})
+
 router.post('/new', async function(req, res) {
     console.log(req.body)
     const data = {
         firstName: req.body.firstName ?? null,
         lastName: req.body.lastName ?? null,
         email: req.body.email ?? null,
-        gpa: parseInt(req.body.gpa) ?? null,
+        gpa: parseFloat(req.body.gpa) ?? null,
         points: parseInt(req.body.points) ?? null,
     }
     const id = await database.createStudent(data);
@@ -40,7 +44,7 @@ router.post('/:id/edit', async function(req, res) {
         firstName: req.body.firstName ?? null,
         lastName: req.body.lastName ?? null,
         email: req.body.email ?? null,
-        gpa: parseInt(req.body.gpa) ?? null,
+        gpa: parseFloat(req.body.gpa) ?? null,
         points: parseInt(req.body.points) ?? null,
     }
 
