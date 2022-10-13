@@ -9,7 +9,7 @@ require('dotenv').config()
 app.use(express.static("./public"))
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
-app.use(morgan('tiny'));
+app.use(morgan('common'));
 app.use(cors());
 app.set('view engine', 'pug')
 

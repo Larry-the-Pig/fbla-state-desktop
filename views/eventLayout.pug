@@ -1,0 +1,18 @@
+doctype html
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        meta(http-equiv="X-UA-Compatible", content="IE=edge")
+        meta(name="viewport", content="width=device-width, initial-scale=1.0")
+        title FBLA State Desktop
+        link(rel="stylesheet", href="/styles.css")
+        block css 
+        block js 
+    body 
+        header 
+            a(href="/events", class="navbutton") Search 
+            a(href="/events/leaderboard", class="navbutton") Leaderboard 
+            a(href="/events/submit", class="navbutton") Add Student 
+            a(href="/fbla.html", class="navbutton") FBLA
+        main 
+            block content 
