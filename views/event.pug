@@ -1,0 +1,22 @@
+extends eventLayout.pug 
+
+block css 
+    link(rel="stylesheet", href="/student.css")
+
+block js 
+    script(src="/delete.js", defer="true") 
+
+block content 
+    h1 Event Entry
+    div
+        p 
+            strong Title: 
+        p=`${title}`
+
+        p 
+            strong Description: 
+        p=`${description}`
+
+        p
+            strong Date: 
+        p=`${date}`

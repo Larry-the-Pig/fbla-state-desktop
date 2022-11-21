@@ -1,0 +1,14 @@
+extends eventLayout.pug
+
+block css
+    link(rel="stylesheet", href="/search.css")
+
+block content  
+        h1 Search Event Directory
+        form(action="/events", method="get")  
+            input(type="text", placeholder="Search..." name="q")
+            input(type="submit", value="Search")
+        ul 
+            each event in results
+                a(href=`/events/${event.entityId}/`)
+                    li= `${event.entityFields.title._value} ${event.entityFields.description._value}`

@@ -1,0 +1,6 @@
+form {
+    display: grid;
+    justify-content: center;
+    grid-template-columns: repeat(2, 25%);
+    gap: 0.25rem;
+}

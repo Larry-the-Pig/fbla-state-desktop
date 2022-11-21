@@ -6,14 +6,16 @@ async function connect() {
     if (!client.isOpen()) {
         await client.open('redis://localhost:6379');
         await studentRepository.createIndex();
+        await eventRepository.createIndex();
     }
 }
 
 connect();
 
 class Student extends Entity { }
+class Event extends Entity { }
 
-const schema = new Schema(Student, {
+const studentSchema = new Schema(Student, {
     firstName: { type: 'string'},
     lastName: { type: 'string'},
     email: { type: 'string'},
@@ -21,9 +23,16 @@ const schema = new Schema(Student, {
     gpa: { type: 'number'}
 })
 
-const studentRepository = client.fetchRepository(schema)
+const eventSchema = new Schema(Event, {
+    title: { type: 'text', weight: 2 },
+    description: { type: 'text', weight: 1 },
+    date: { type: 'date' }
+})
 
-async function createStudent(data) {
+const studentRepository = client.fetchRepository(studentSchema)
+const eventRepository = client.fetchRepository(eventSchema);
+
+Student.create = async function(data) {
     await connect();
 
     const student = studentRepository.createEntity()
@@ -37,7 +46,7 @@ async function createStudent(data) {
     return id;
 }
 
-async function editStudent(id, data) {
+Student.edit = async function(id, data) {
     await connect();
 
     const student = await studentRepository.fetch(id);
@@ -51,7 +60,7 @@ async function editStudent(id, data) {
     return await studentRepository.save(student);
 }
 
-async function getStudent(id) {
+Student.get = async function(id) {
     await connect();
 
     const student = await studentRepository.fetch(id);
@@ -66,13 +75,13 @@ async function getStudent(id) {
     //return student;
 }
 
-async function deleteStudent(id) {
+Student.delete = async function(id) {
     await connect()
 
     await studentRepository.remove(id)
 }
 
-async function searchStudent(query) {
+Student.search = async function(query) {
     await connect()
 
     const results = await studentRepository.search()
@@ -85,7 +94,7 @@ async function searchStudent(query) {
     return results//.json()
 }
 
-async function getLeaderboard() {
+Student.leaderboard = async function() {
     await connect();
 
     const results = await studentRepository.search().sortDescending('points').return.all()
@@ -93,11 +102,46 @@ async function getLeaderboard() {
     return results;
 }
 
+Event.create = async function(data) {
+    await connect();
+
+    const event = eventRepository.createEntity()
+    event.title = data.title;
+    event.description = data.description;
+    event.date = data.date;
+    const id = await eventRepository.save(event);
+
+    return id;
+}
+
+Event.get = async function(id) {
+    await connect();
+
+    const event = await eventRepository.fetch(id);
+
+    return {
+        title: event.title,
+        description: event.description,
+        date: event.date
+    }
+    //return student;
+}
+
+Event.search = async function(query) {
+    await connect();
+
+    //eventRepository.search().return()
+    const results = await eventRepository.search()
+        .where('title')
+        .matches(query)
+        .or('description')
+        .matches(query)
+        .return.all();
+    //console.log(results[0].entityFields.title._value)
+    return results
+}
+
 module.exports = { 
-    getStudent, 
-    createStudent, 
-    deleteStudent, 
-    searchStudent, 
-    getLeaderboard, 
-    editStudent 
+    Student,
+    Event
 }

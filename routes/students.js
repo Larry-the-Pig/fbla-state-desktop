@@ -1,20 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const database = require('../src/database');
+const {Student} = require('../src/database');
 
 router.get('/', async function(req, res) {
     if (req.query.q === undefined || req.query.q === '') {
         //Empty Search Results
-        res.render('search', { results: [] })
+        res.render('searchStudent', { results: [] })
     } else {
         //Search db for query
-        const results = await database.searchStudent(req.query.q)
-        res.render('search', { results: results })
+        const results = await Student.search(req.query.q)
+        res.render('searchStudent', { results: results })
     }
 })
 
 router.get('/leaderboard', async function(req, res) {
-    const results = await database.getLeaderboard();
+    const results = await Student.leaderboard();
     //console.log(results)
     res.render('leaderboard', { results: results })
 })
@@ -32,7 +32,7 @@ router.post('/new', async function(req, res) {
         gpa: parseFloat(req.body.gpa) ?? null,
         points: parseInt(req.body.points) ?? null,
     }
-    const id = await database.createStudent(data);
+    const id = await Student.create(data);
 
     res.redirect(`${id}/`);
     console.log(`Created ID: ${id}`);
@@ -48,13 +48,13 @@ router.post('/:id/edit', async function(req, res) {
         points: parseInt(req.body.points) ?? null,
     }
 
-    await database.editStudent(req.params.id, data);
+    await Student.edit(req.params.id, data);
     res.redirect(`/students/${req.params.id}/`)
 })
 
 router.route('/:id/')
     .get(async function(req, res) {
-        const data = await database.getStudent(req.params.id);
+        const data = await Student.get(req.params.id);
 
         res.render('student', data)
     })
@@ -73,7 +73,7 @@ router.route('/:id/')
     })
     .delete(async function(req, res) {
         console.log('Deleted: ' + req.params.id)
-        await database.deleteStudent(req.params.id);
+        await Student.delete(req.params.id);
         res.redirect('/')
     })
 
