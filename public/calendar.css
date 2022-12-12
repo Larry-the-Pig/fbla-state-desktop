@@ -1,0 +1,27 @@
+ul {
+    padding: 0;
+}
+
+.date {
+    color: hsl(220, 16%, 46%);
+    font-size: 0.75rem;
+}
+
+li {
+    padding: 0.25rem;
+    list-style-type: none;
+    border-bottom: 0.15rem solid hsl(220, 16%, 17%);
+    /*border-radius: 1rem;*/
+}
+
+li * {
+    margin: 0.25rem;
+}
+
+ul li:last-child {
+    border: none;
+}
+
+a {
+    margin: 0;
+}

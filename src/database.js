@@ -26,7 +26,7 @@ const studentSchema = new Schema(Student, {
 const eventSchema = new Schema(Event, {
     title: { type: 'text', weight: 2 },
     description: { type: 'text', weight: 1 },
-    date: { type: 'date' }
+    date: { type: 'date', sortable: true }
 })
 
 const studentRepository = client.fetchRepository(studentSchema)
@@ -139,6 +139,14 @@ Event.search = async function(query) {
         .return.all();
     //console.log(results[0].entityFields.title._value)
     return results
+}
+
+Event.calendar = async function() {
+    await connect();
+
+    const results = await eventRepository.search().sortDescending('date').return.all()
+
+    return results;
 }
 
 module.exports = { 

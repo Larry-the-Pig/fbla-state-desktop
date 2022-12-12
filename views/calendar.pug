@@ -1,0 +1,17 @@
+extends eventLayout.pug 
+
+block css 
+    link(rel="stylesheet", href="/calendar.css")
+
+block content 
+    h1 Event List
+    
+    ul 
+        each event in results
+            li 
+                a(href=`/events/${event.entityId}/`)
+                    h2=`${event.entityFields.title._value}`
+                p(class="desc")=`${event.entityFields.description._value}`
+                p(class="date")=`${event.entityFields.date._value.toLocaleString()}`
+            
+        

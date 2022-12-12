@@ -15,8 +15,9 @@ router.get('/', async function(req, res) {
 })
 
 router.get('/calendar', async function(req, res) {
-    const results = await database.getLeaderboard();
+    //const results = await database.getLeaderboard();
     //console.log(results)
+    const results = await Event.calendar();
     res.render('calendar', { results: results })
 })
 
@@ -57,7 +58,7 @@ router.route('/:id/')
     .get(async function(req, res) {
         const data = await Event.get(req.params.id);
 
-        data.date = (data.date === null) ? null : data.date.toDateString();
+        data.date = (data.date === null) ? null : data.date.toLocaleString();
 
         res.render('event', data)
     })
