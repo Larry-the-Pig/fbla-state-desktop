@@ -16,11 +16,15 @@ class Student extends Entity { }
 class Event extends Entity { }
 
 const studentSchema = new Schema(Student, {
-    firstName: { type: 'string'},
-    lastName: { type: 'string'},
-    email: { type: 'string'},
+    firstName: { type: 'string' },
+    lastName: { type: 'string' },
+    email: { type: 'string' },
     points: { type: 'number', sortable: true },
-    gpa: { type: 'number'}
+    gpa: { type: 'number' },
+    eventsAttended: { type: 'string[]' },
+
+    username: { type: "string" },
+    password: { type: "string" }
 })
 
 const eventSchema = new Schema(Event, {
@@ -41,6 +45,7 @@ Student.create = async function(data) {
     student.email = data.email;
     student.points = data.points;
     student.gpa = data.gpa;
+    student.password = data.password;
     const id = await studentRepository.save(student);
 
     return id;
@@ -56,6 +61,7 @@ Student.edit = async function(id, data) {
     student.email = data.email;
     student.points = data.points;
     student.gpa = data.gpa;
+    student.eventsAttended = data.eventsAttended;
     
     return await studentRepository.save(student);
 }
@@ -70,7 +76,9 @@ Student.get = async function(id) {
         lastName: student.lastName,
         email: student.email,
         points: student.points,
-        gpa: student.gpa
+        gpa: student.gpa,
+        eventsAttended: student.eventsAttended,
+        password: student.password
     }
     //return student;
 }
@@ -92,6 +100,18 @@ Student.search = async function(query) {
         .return.all();
     //console.log(results)
     return results//.json()
+}
+
+Student.searchEmail = async function(email) {
+    await connect();
+
+    const result = await studentRepository.search()
+        .where('email')
+        .equals(email)
+        .return.first();
+    
+    return result;
+    console.log(result);
 }
 
 Student.leaderboard = async function() {

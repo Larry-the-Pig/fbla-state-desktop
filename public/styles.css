@@ -82,6 +82,7 @@ button {
 }
 
 a.navbutton {
+  float: left;
   background-color: #4C566A;
   text-decoration: none;
   
@@ -94,7 +95,11 @@ a.navbutton:hover {
 }
 
 header {
-  overflow: hidden;
+  display: inline-block;
   width: 100%;
   background-color: hsl(220, 16%, 17%);
+}
+
+.navbutton.right {
+  float: right;
 }

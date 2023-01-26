@@ -23,3 +23,11 @@ input.submit {
     background-color: #A3BE8C;
     color: #2e3440;
 }
+
+ul {
+    padding-left: 0;
+}
+
+ul input {
+    margin-bottom: 0.25rem;
+}

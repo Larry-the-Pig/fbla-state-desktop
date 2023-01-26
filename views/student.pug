@@ -29,6 +29,12 @@ block content
         p 
             strong GPA: 
         p=`${gpa}`
+
+        p 
+            strong Events Attended: 
+        //ul 
+            each event in eventsAttended
+                li=`${event}`
         input(type="button", value="Delete", class="delete")
         input(type="button", value="Edit", class="put" onclick="location.href+='/edit'")
     
@@ -48,5 +54,11 @@ block content
         p 
             strong GPA: 
         input(class="edit" type="number", step="0.01", min="0", max="4" name="gpa" value=`${gpa}`)
+        p 
+            strong Attended Events: 
+        //ul 
+            each event in eventsAttended
+                input(class="edit", type="text", name="eventsAttended", value=`${event}` )
+        input(class="edit", type="text", name="eventsAttended" )
         input(type="submit", value="Submit", class="submit")
         input(type="button", value="Exit", class="put" onclick="location.href+='/edit'")
