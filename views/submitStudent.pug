@@ -1,31 +1,25 @@
 extends studentLayout.pug 
 
+block css 
+    link(rel="stylesheet", href="/login.css")
+
+block js 
+    script(src="/submit.js" defer="true") 
+
 block content
     h1 New Student Form
-    form(method="post", action="/students/new")
-        label(for="firstName") 
-            strong First Name: 
-        input(id="firstName", name="firstName", type="text", placeholder="First Name...")
-        br
+    form(method="post", action="/login/new")
+        input(required, id="email", name="email", type="email", placeholder="Email...")
+        
+        input(required, id="password", name="password", type="password", placeholder="Password...")
 
-        label(for="lastName") 
-            strong First Name: 
-        input(id="lastName", name="lastName", type="text", placeholder="Last Name...")
-        br
+        input(required, id="firstName", name="firstName", type="text", placeholder="First Name...")
+ 
+        input(required, id="lastName", name="lastName", type="text", placeholder="Last Name...")
 
-        label(for="email") 
-            strong Email: 
-        input(id="email", name="email", type="email", placeholder="Email...")
-        br
+        label(for="gradeLevel") Grade Level:
+        input(required, id="gradeLevel", name="gradeLevel", type="range", min="9", max="12", value="9")
 
-        label(for="gpa") 
-            strong GPA: 
-        input(id="gpa", name="gpa", type="number", min="0", max="4", step="0.01" placeholder="GPA...")
-        br
-
-        label(for="points") 
-            strong Points: 
-        input(id="points", name="points", type="number", min="0", placeholder="Points...")
-        br
+        input(required, id="gpa", name="gpa", type="number", min="0", max="4", step="0.01" placeholder="GPA...")
 
         input(type="submit", value="Submit")

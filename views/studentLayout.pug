@@ -12,7 +12,13 @@ html(lang="en")
         header 
             a(href="/students", class="navbutton") Search 
             a(href="/students/leaderboard", class="navbutton") Leaderboard 
-            a(href="/students/submit", class="navbutton") Add Student 
             a(href="/events", class="navbutton") Events
+            if loggedin 
+                p(class="navbutton right")=`${username}`
+                form(class="logout-container", action="/login/logout", method="post") 
+                    input(class="navbutton", type="button", value="My Account" onclick=`window.location.href="/students/${entityId}/"`)
+                    input(class="navbutton", type="submit", value="Log Out")
+            else
+                a(href="/login", class="navbutton right") Login
         main 
             block content 

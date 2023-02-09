@@ -12,7 +12,15 @@ html(lang="en")
         header 
             a(href="/events", class="navbutton") Search 
             a(href="/events/calendar", class="navbutton") Calendar 
-            a(href="/events/submit", class="navbutton") Add Event 
+            if isAdmin 
+                a(href="/events/submit", class="navbutton") Add Event 
             a(href="/students", class="navbutton") Students
+            if loggedin 
+                p(class="navbutton right")=`${username}`
+                form(class="logout-container", action="/login/logout", method="post") 
+                    input(class="navbutton", type="button", value="My Account" onclick=`window.location.href="/students/${entityId}"`)
+                    input(class="navbutton", type="submit", value="Log Out")
+            else
+                a(href="/login", class="navbutton right") Login 
         main 
             block content 

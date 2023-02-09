@@ -1,0 +1,13 @@
+extends studentLayout.pug 
+
+block css 
+    link(rel="stylesheet", href="/login.css")
+
+block content 
+    h1 Login
+    form(action="login", method="post") 
+        input(required, type="text", name="user", placeholder="Username")
+        input(required, type="password", name="pass", placeholder="Password") 
+        input(required, type="submit", value="Login") 
+        a(href="/login/new") Create New Account
+    

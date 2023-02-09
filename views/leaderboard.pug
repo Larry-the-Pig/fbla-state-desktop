@@ -5,3 +5,5 @@ block content
         each student in results
             a(href=`/students/${student.entityId}/`)
                 li= `${student.entityFields.firstName._value} ${student.entityFields.lastName._value} - ${student.entityFields.points._value} Points`
+    form(action="/students/report", method="get") 
+        input(type="submit", value="Create Report")
