@@ -81,17 +81,46 @@ button {
   height: 100%;
 }
 
-a.navbutton {
+.navbutton {
   float: left;
   background-color: #4C566A;
   text-decoration: none;
+  border-radius: 0;
   
   padding: 1rem;
-  float: left;
+  margin: 0;
+
+  cursor: pointer;
+  transition: background-color 500ms;
 }
 
-a.navbutton:hover {
+.navbutton:hover {
   background-color: hsl(220, 16%, 41%);
+}
+
+p.navbutton:hover + .logout-container {
+  display: flex;
+}
+
+.logout-container {
+  position: fixed;
+  flex-direction: column;
+  gap: 0;
+  top: 3.1rem;
+  right: 0;
+  display: none;
+}
+
+.logout {
+  border-radius: 0;
+  margin: 0;
+  padding: 1rem;
+  background-color: hsl(220, 16%, 41%);
+}
+
+.logout-container:hover {
+  height: auto;
+  display: flex;
 }
 
 header {
@@ -102,4 +131,16 @@ header {
 
 .navbutton.right {
   float: right;
+}
+
+::-webkit-input-placeholder { /* Edge */
+  color: #99a7b2;
+}
+
+:-ms-input-placeholder { /* Internet Explorer 10-11 */
+  color: #99a7b2;
+}
+
+::placeholder {
+  color: #99a7b2;
 }

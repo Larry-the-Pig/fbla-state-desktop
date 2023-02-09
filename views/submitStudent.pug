@@ -3,24 +3,23 @@ extends studentLayout.pug
 block css 
     link(rel="stylesheet", href="/login.css")
 
+block js 
+    script(src="/submit.js" defer="true") 
+
 block content
     h1 New Student Form
-    form(method="post", action="/students/new")
-        input(id="email", name="email", type="email", placeholder="Email...")
+    form(method="post", action="/login/new")
+        input(required, id="email", name="email", type="email", placeholder="Email...")
         
+        input(required, id="password", name="password", type="password", placeholder="Password...")
 
-        input(id="password", name="password", type="password", placeholder="Password...")
-
-        input(id="firstName", name="firstName", type="text", placeholder="First Name...")
-        
+        input(required, id="firstName", name="firstName", type="text", placeholder="First Name...")
  
-        input(id="lastName", name="lastName", type="text", placeholder="Last Name...")
-        
+        input(required, id="lastName", name="lastName", type="text", placeholder="Last Name...")
 
-        input(id="gpa", name="gpa", type="number", min="0", max="4", step="0.01" placeholder="GPA...")
-        
+        label(for="gradeLevel") Grade Level:
+        input(required, id="gradeLevel", name="gradeLevel", type="range", min="9", max="12", value="9")
 
-        input(id="points", name="points", type="number", min="0", placeholder="Points...")
-        
+        input(required, id="gpa", name="gpa", type="number", min="0", max="4", step="0.01" placeholder="GPA...")
 
         input(type="submit", value="Submit")

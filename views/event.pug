@@ -11,12 +11,18 @@ block content
     div
         p 
             strong Title: 
-        p=`${title}`
+        p=`${result.title}`
 
         p 
             strong Description: 
-        p=`${description}`
+        p=`${result.description}`
 
         p
             strong Date: 
-        p=`${date}`
+        p=`${result.date}`
+
+        if attended 
+            p(class="put") You Attended
+        else 
+            form(action="attended", method="post", class="attended-container") 
+                input(type="submit", value="I Attended", class="put")

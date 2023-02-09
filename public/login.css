@@ -1,6 +1,8 @@
 form {
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 0.25rem
+    align-items: stretch;
+    gap: 0.25rem;
+    width: 30rem;
+    margin: auto;
 }

@@ -7,17 +7,17 @@ block content
     form(method="post", action="/events/new")
         label(for="title") 
             strong Title: 
-        input(id="title", name="title", type="text", placeholder="Title...")
+        input(required, id="title", name="title", type="text", placeholder="Title...")
         
 
         label(for="description") 
             strong Description: 
-        textarea(id="description", cols="4", name="description", placeholder="Description...")
+        textarea(required, id="description", cols="4", name="description", placeholder="Description...")
         
 
         label(for="date") 
             strong Date: 
-        input(id="date", name="date", type="datetime-local")
+        input(required, id="date", name="date", type="datetime-local")
         
 
         input(type="submit", value="Submit")

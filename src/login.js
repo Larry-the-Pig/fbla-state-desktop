@@ -1,31 +1,32 @@
 const { createHash } = require('crypto');
 const { Student } = require('./database')
 
-async function createAccount(email, password, firstName, lastName, gpa) {
+async function createAccount(email, password, firstName, lastName, gradeLevel, gpa) {
+    
     const hash = createHash('sha256').update(password).digest('hex');
     
     const otherEmail = await Student.searchEmail(email);
 
     if(otherEmail != null) {
-        return "Account Already Exists";
+        return "Error: Account Already Exists";
     }
 
-    await Student.create({
+    const id = await Student.create({
         email: email,
         firstName: firstName,
         lastName: lastName,
         gpa: gpa,
-        password: hash
+        password: hash,
+        points: 0,
+        gradeLevel: gradeLevel,
+        eventsAttended: []
     })
 
-    return "Success!";
+    return id;
 }
 
-async function login(email, password) {
-    console.log(password)
-    console.log(email)
+async function login(email, password, cookie) {
     const hash = createHash('sha256').update(password).digest('hex');
-    console.log(hash);
 
     const student = await Student.searchEmail(email);
 

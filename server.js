@@ -3,11 +3,15 @@ const app = express();
 const cors = require('cors');
 const morgan = require('morgan');
 const bodyParser = require('body-parser');
-const login = require("./src/login")
-
-require('dotenv').config()
+require('dotenv').config();
+const session = require('express-session');
 
 app.use(express.static("./public"))
+app.use(session({
+	secret: process.env.SECRET,
+	resave: true,
+	saveUninitialized: true
+}));
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(bodyParser.json());
 app.use(morgan('common'));

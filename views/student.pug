@@ -11,54 +11,49 @@ block content
     div
         p 
             strong First Name: 
-        p=`${firstName}`
+        p=`${results.firstName}`
 
         p 
             strong Last Name: 
-        p=`${lastName}`
+        p=`${results.lastName}`
 
         p
             strong Email: 
         p
-            a(href=`mailto:${email}`)=`${email}`
+            a(href=`mailto:${email}`)=`${results.email}`
 
         p
             strong Points: 
-        p=`${points}`
+        p=`${results.points}`
 
         p 
             strong GPA: 
-        p=`${gpa}`
-
+        p=`${results.gpa}`
         p 
-            strong Events Attended: 
-        //ul 
-            each event in eventsAttended
-                li=`${event}`
-        input(type="button", value="Delete", class="delete")
-        input(type="button", value="Edit", class="put" onclick="location.href+='/edit'")
-    
-    form(action="edit", method="post" class="hidden")
-        p 
-            strong First Name: 
-        input(class="edit" type="text" name="firstName" value=`${firstName}`)
-        p 
-            strong Last Name: 
-        input(class="edit" type="text" name="lastName" value=`${lastName}`)
-        p
-            strong Email: 
-        input(class="edit" type="email" name="email" value=`${email}`)
-        p
-            strong Points: 
-        input(class="edit" type="number", min="0" name="points" value=`${points}`)
-        p 
-            strong GPA: 
-        input(class="edit" type="number", step="0.01", min="0", max="4" name="gpa" value=`${gpa}`)
-        p 
-            strong Attended Events: 
-        //ul 
-            each event in eventsAttended
-                input(class="edit", type="text", name="eventsAttended", value=`${event}` )
-        input(class="edit", type="text", name="eventsAttended" )
-        input(type="submit", value="Submit", class="submit")
-        input(type="button", value="Exit", class="put" onclick="location.href+='/edit'")
+            strong Grade Level: 
+        p=`${results.gradeLevel}`
+    if editAccess
+        div 
+            input(type="button", value="Delete", class="delete")
+            input(type="button", value="Edit", class="put" onclick="location.href+='/edit'")
+        form(action="edit", method="post" class="hidden")
+            p 
+                strong First Name: 
+            input(reqired, class="edit" type="text" name="firstName" value=`${results.firstName}`)
+            p 
+                strong Last Name: 
+            input(required, class="edit" type="text" name="lastName" value=`${results.lastName}`)
+            p
+                strong Email: 
+            input(required, class="edit" type="email" name="email" value=`${results.email}`)
+            p
+                strong Points: 
+            p=`${results.points}`
+            p 
+                strong GPA: 
+            input(required, class="edit" type="number", step="0.01", min="0", max="4" name="gpa" value=`${results.gpa}`)
+            p 
+                strong Grade Level: 
+            input(required, class="edit" type="number", min="9", max="11" name="gradeLevel" value=`${results.gradeLevel}`)
+            input(type="submit", value="Submit", class="submit")
+            input(type="button", value="Exit", class="put" onclick="location.href+='/edit'")

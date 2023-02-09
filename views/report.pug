@@ -1,0 +1,23 @@
+extends studentLayout.pug
+
+block css 
+    link(rel="stylesheet", href="/report.css")
+
+block content 
+    h1 Quarterly Report 
+    h3 Overall Winner is 
+    h2 #{overallWinner.firstName} #{overallWinner.lastName} with a whopping #{overallWinner.points} points!<br />You win #{overallWinner.prize}!
+    h3 Winners From Each Grade Level Are... 
+    div(class="grades") 
+        div(class="grade-container")
+            h2 9th Grade:
+            p #{winner9th.firstName} #{winner9th.lastName} with #{winner9th.points} points!<br/>You win #{winner9th.prize}
+        div(class="grade-container")
+            h2 10th Grade:
+            p #{winner10th.firstName} #{winner10th.lastName} with #{winner10th.points} points!<br />You win #{winner10th.prize}
+        div(class="grade-container")
+            h2 11th Grade:
+            p #{winner11th.firstName} #{winner11th.lastName} with #{winner11th.points} points!<br />You win #{winner11th.prize}
+        div(class="grade-container")
+            h2 12th Grade:
+            p #{winner12th.firstName} #{winner12th.lastName} with #{winner12th.points} points!<br />You win #{winner12th.prize}

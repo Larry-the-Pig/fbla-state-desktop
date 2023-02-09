@@ -1,46 +1,78 @@
 const express = require('express');
 const router = express.Router();
-const { Event } = require('../src/database');
+const { Event, Student } = require('../src/database');
 
 router.get('/', async function(req, res) {
+    let data = {};
+    
+    if (req.session.loggedin) {
+        data.loggedin = true;
+        data.username = req.session.username
+        data.entityId = req.session.entityId
+        data.isAdmin = req.session.isAdmin;
+    }
+
     if (req.query.q === undefined || req.query.q === '') {
         //Empty Search Results
-        res.render('searchEvent', { results: [] })
+        data.results = [];
     } else {
         //Search db for query
-        console.log("results")
-        const results = await Event.search(req.query.q)
-        res.render('searchEvent', { results: results })
+        data.results = await Event.search(req.query.q)
     }
+    res.render('searchEvent', data)
 })
 
 router.get('/calendar', async function(req, res) {
-    //const results = await database.getLeaderboard();
-    //console.log(results)
-    const results = await Event.calendar();
-    res.render('calendar', { results: results })
+    let data = {};
+
+    if (req.session.loggedin) {
+        data.loggedin = true;
+        data.username = req.session.username
+        data.entityId = req.session.entityId
+        data.isAdmin = req.session.isAdmin;
+    }
+
+    data.results = await Event.calendar();
+    res.render('calendar', data)
 })
 
 router.get('/submit', async function(req, res) {
-    res.render('submitEvent')
+    if(!req.session.isAdmin) {
+        res.status(400);
+        res.send('400: Not Authorized');
+        return;
+    }
+    
+    let data = {};
+
+    if (req.session.loggedin) {
+        data.loggedin = true;
+        data.username = req.session.username
+        data.entityId = req.session.entityId
+        data.isAdmin = req.session.isAdmin;
+    }
+    res.render('submitEvent', data)
 })
 
 router.post('/new', async function(req, res) {
+    if (!req.session.isAdmin) {
+        res.status(400);
+        res.send('400: Not Authorized');
+        return;
+    }
     const date = new Date(req.body.date);
     const data = {
         title: req.body.title ?? null,
         description: req.body.description ?? null,
         date: (isNaN(date.getTime())) ? null : date,
     }
-    console.log(data)
+
     const id = await Event.create(data);
 
     res.redirect(`${id}/`);
-    console.log(`Created ID: ${id}`);
 })
 
 router.post('/:id/edit', async function(req, res) {
-    console.log(req.body);
     const date = new Date(req.body.date);
     const data = {
 	    title: req.body.title ?? null,
@@ -48,22 +80,42 @@ router.post('/:id/edit', async function(req, res) {
 	    date: (isNaN(date.getTime())) ? null : date
     };
 
-    console.log(data);
-
     await database.editStudent(req.params.id, data);
     res.redirect(`/students/${req.params.id}/`)
 })
 
+router.post('/:id/attended', async function(req, res) {
+    const studentId = req.session.entityId;
+    const eventId = req.params.id;
+    
+    await Student.addEventAttended(eventId, studentId);
+    res.redirect(`/events/${req.params.id}/`)
+})
+
 router.route('/:id/')
     .get(async function(req, res) {
-        const data = await Event.get(req.params.id);
-
-        data.date = (data.date === null) ? null : data.date.toLocaleString();
+        let data = {};
+        
+        data.result = await Event.get(req.params.id);
+        
+        data.result.date = (data.result.date === null) ? null : data.result.date.toLocaleString();
+        
+        data.attended = true;
+        if (req.session.loggedin) {
+            data.loggedin = true;
+            data.username = req.session.username
+            data.entityId = req.session.entityId
+            
+            const student = await Student.get(req.session.entityId);
+            data.attended = false;
+            if (student.eventsAttended.includes(req.params.id)) {
+                data.attended = true;
+            }
+        }
 
         res.render('event', data)
     })
     .delete(async function(req, res) {
-        console.log('Deleted: ' + req.params.id)
         await database.deleteStudent(req.params.id);
         res.redirect('/')
     })
