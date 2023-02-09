@@ -9,7 +9,7 @@ router.get('/', async function(req, res) {
     if (req.session.loggedin) {
         data.loggedin = true;
         data.username = req.session.username
-data.entityId = req.session.entityId
+        data.entityId = req.session.entityId
     }
     if (req.query.q === undefined || req.query.q === '') {
         //Empty Search Results
@@ -66,7 +66,7 @@ data.entityId = req.session.entityId
 })
 
 router.post('/:id/edit', async function(req, res) {
-    if(req.session.id !== req.params.id || req.session.isAdmin) {
+    if(req.session.entityId !== req.params.id || req.session.isAdmin) {
         res.status(401);
         res.send("Error 401: Not Authorized");
         return
